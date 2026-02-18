@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 import "./styles.css";
 
@@ -12,12 +11,29 @@ function genLocalMail() {
 function App() {
   //States
   const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark");
-  const [mail, setMail] = useState(() => genLocalMail);
+  const [Email, setEmail] = useState(() => genLocalMail);
   const [messages, setMessages] = useState([]);
   const [active, setActive] = useState(null);
 
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
-  return <div>Hey!</div>;
+  const hasMsgs = useMemo(() => messages.length > 0, [messages]);
+
+  async function copyMail(){
+    await navigator.clipboard.writeText(Email);
+  }
+  function refreshMail(){
+    setEmail(genLocalMail());
+    setMessages([]);
+    setActive(null);
+  }
+
+  return <div className="page">
+    
+
+  </div>
 }
 
 export default App;
