@@ -7,19 +7,15 @@ function genLocalMail() {
   return `${user}@mails.zepmail.xyz`;
 }
 
-//Loader
-function Loader({ theme }) {
-  const logoSrc =
-    theme === "dark" ? "/epMail-darkmode.svg" : "/epMail-lightmode.svg";
 
+function Loader({ logoSrc }) {
   return (
     <div className="loaderScreen" aria-label="Loading">
-      <img
-        className="loaderLogo"
-        src={logoSrc}
-        alt="ZepMail"
-        draggable="false"
-      />
+      <div className="loaderWrap">
+        <img className="loaderLogo" src={logoSrc} alt="ZepMail" draggable="false" />
+        <div className="loaderText">Loading ZepMail…</div>
+        <div className="loaderBar" />
+      </div>
     </div>
   );
 }
@@ -60,7 +56,6 @@ function App() {
   function refreshEmail() {
     setEmail(genLocalMail());
     setMessages([]);
-
     setActive(null);
   }
   const logoSrc =
@@ -73,11 +68,12 @@ function App() {
       {/* TopBar - Header */}
       <header className="topbar">
         <div className="brand">
-          <div className="logo" />
-          <div>
-            <div className="brandTitle">ZepMail</div>
-            <div className="brandSub">temporary inbox</div>
-          </div>
+          <img
+            className="brandLogo"
+            src={logoSrc}
+            alt="ZepMail"
+            draggable="false"
+          />
         </div>
 
         <div className="topbarRight">
@@ -119,7 +115,7 @@ function App() {
 
             {!hasMsgs ? (
               <div className="empty">
-                ages yet.
+                No messages yet.
                 <div className="loading-bar"></div>
               </div>
             ) : (
