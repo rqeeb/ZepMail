@@ -7,12 +7,16 @@ function genLocalMail() {
   return `${user}@mails.zepmail.xyz`;
 }
 
-
 function Loader({ logoSrc }) {
   return (
     <div className="loaderScreen" aria-label="Loading">
       <div className="loaderWrap">
-        <img className="loaderLogo" src={logoSrc} alt="ZepMail" draggable="false" />
+        <img
+          className="loaderLogo"
+          src={logoSrc}
+          alt="ZepMail"
+          draggable="false"
+        />
         <div className="loaderText">Loading ZepMail…</div>
         <div className="loaderBar" />
       </div>
@@ -31,7 +35,8 @@ function App() {
   const [active, setActive] = useState(null);
   const hasMsgs = useMemo(() => messages.length > 0, [messages]);
 
-    const logoSrc = theme === "dark" ? "/epMail-darkmode.svg" : "/epMail-lightmode.svg";
+  const logoSrc =
+    theme === "dark" ? "/epMail-darkmode.svg" : "/epMail-lightmode.svg";
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("theme", theme);
@@ -54,15 +59,19 @@ function App() {
     await navigator.clipboard.writeText(email);
   }
 
-  function refreshEmail() {
+  function changeEmail() {
     setEmail(genLocalMail());
     setMessages([]);
     setActive(null);
   }
-  const logoSrc =
-    theme === "dark" ? "/epMail-darkmode.svg" : "/epMail-lightmode.svg";
 
-  if (isLoading) return <Loader theme={theme} />;
+  function refreshInbox() {
+    // TODO:
+  }
+
+
+
+  if (isLoading) return <Loader logoSrc={logoSrc} />;
 
   return (
     <div className="page">
