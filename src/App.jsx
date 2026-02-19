@@ -69,56 +69,107 @@ function App() {
     // TODO:
   }
 
-
-
   if (isLoading) return <Loader logoSrc={logoSrc} />;
 
+  /// Break -------------------------- Point
   return (
     <div className="page">
       {/* TopBar - Header */}
       <header className="topbar">
-        <div className="brand">
+        <div className="topbarInner">
           <img
             className="brandLogo"
             src={logoSrc}
             alt="ZepMail"
             draggable="false"
           />
-        </div>
 
-        <div className="topbarRight">
           <button
-            className="pill"
+            className="iconBtn"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            aria-label="Toggle theme"
+            title="Toggle theme"
           >
-            {theme === "dark" ? "Dark" : "Light"}
-          </button>
-          <button className="pill primary" onClick={refreshEmail}>
-            New address
+            {theme === "dark" ? "Dark Mode" : "Light Mode"}
           </button>
         </div>
       </header>
 
-      <main className="container">
-        <section className="heroCard">
-          <div className="heroTitle">Your Temporary Email Address</div>
+      <main className="wrap">
+        <section className="hero">
+          <h1 className="title">Free Temporary Email</h1>
+          <p className="sub">
+            Receive emails anonymously with your private, secure temporary email
+            address.
+          </p>
 
-          <div className="emailRow">
-            <div className="emailBox">
-              <span className="mono">{email}</span>
+          <div className="emailCard">
+            <div className="emailRow">
+              <div
+                className="emailField"
+                role="textbox"
+                aria-label="Temporary email"
+              >
+                <span className="emailText">{email}</span>
+
+                <button
+                  className="miniIconBtn"
+                  onClick={copyEmail}
+                  aria-label="Copy email"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M8 7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2V7Z"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M6 17H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <button className="btn" onClick={changeEmail}>
+                <span className="btnIcon" aria-hidden="true">
+                  {/* refresh icon */}
+                  <svg viewBox="0 0 24 24" width="18" height="18">
+                    <path
+                      d="M20 12a8 8 0 1 1-2.34-5.66"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M20 4v6h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                Change email
+              </button>
             </div>
-          </div>
-
-          <div className="actions">
-            <button className="btn" onClick={copyEmail}>
-              Copy
-            </button>
-            <button className="btn" onClick={refreshEmail}>
-              Refresh
-            </button>
           </div>
         </section>
 
+
+        {/* --------------Here fixes req------------ */}
         <section className="grid">
           <section className="card">
             <div className="cardTitle">Inbox</div>
