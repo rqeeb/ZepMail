@@ -16,7 +16,6 @@
   --radius: 18px;
 }
 
-
 :root[data-theme="dark"] {
   --bg: var(--b);
   --text: var(--w);
@@ -57,5 +56,31 @@ body {
       transparent 70%
     ),
     var(--bg);
+}
+
+.topbar {
+  height: 72px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(
+    90deg,
+    rgba(145, 1, 185, 0.08),
+    rgba(200, 0, 255, 0.04) 40%,
+    rgba(255, 255, 255, 0.85) 100%
+  );
+  backdrop-filter: blur(12px);
+}
+:root[data-theme="dark"] .topbar {
+  background: rgba(11, 11, 15, 0.58);
+}
+
+.topbarInner {
+  width: 100%;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
