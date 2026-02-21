@@ -350,3 +350,65 @@ body {
   margin-top: 14px;
 }
 
+.list {
+  display: grid;
+  gap: 10px;
+}
+
+.row {
+  width: 100%;
+  text-align: left;
+
+  border: 1px solid var(--border);
+  background: transparent;
+  border-radius: 14px;
+  padding: 12px 12px;
+
+  cursor: pointer;
+  color: var(--text);
+}
+
+.row:hover {
+  border-color: rgba(193, 47, 233, 0.35);
+  background: rgba(193, 47, 233, 0.04);
+}
+
+.rowFrom {
+  font-weight: 800;
+  font-size: 13px;
+}
+.rowSub {
+  margin-top: 6px;
+  font-weight: 600;
+  opacity: 0.92;
+}
+.rowMeta {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.kv {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.kv span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.mailBody {
+  margin: 14px 0 0;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(193, 47, 233, 0.03);
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--text);
+}
+

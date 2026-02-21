@@ -385,3 +385,8 @@ function App() {
 }
 
 export default App;
+
+
+// TODO: Seprate Components/Functions
+// TODO: Backend
+// TODO: Complete CSS 
