@@ -251,7 +251,6 @@ body {
   box-shadow: var(--shadow);
 }
 
-
 .btnIcon {
   display: inline-flex;
 }
@@ -361,7 +360,6 @@ body {
 }
 
 .row:hover {
-  border-color: rgba(193, 47, 233, 0.35);
   background: rgba(193, 47, 233, 0.04);
 }
 
