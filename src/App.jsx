@@ -36,7 +36,6 @@ function App() {
       body: "The OTP for x service is 7869 - Thanks",
       time: "Just now",
     },
-    
   ]);
   const [active, setActive] = useState(null);
   const hasMsgs = useMemo(() => messages.length > 0, [messages]);

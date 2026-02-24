@@ -2,7 +2,10 @@ const { Router } = require("express");
 const mailRouter = Router();
 
 mailRouter.get("/mail", (req, res) => {
-  //   console.log("hit");
+  const locMail = req.mail;
+  //Add expire in schema - mongo!
+
+  //mail gun thingy!
   return res.json({ message: "test sucess!" });
 });
 
