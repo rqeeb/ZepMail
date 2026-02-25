@@ -4,14 +4,16 @@ require("dotenv").config();
 
 const mongoURI = process.env.MONGODB_URI;
 
-mongoose.connect(mongoURI)
-  .then(() => {
-    console.log("Mongo connected");
-  })
-  .catch((err) => {
-    console.log("Connection error:", err);
-  });
-
+async function connectDb() {
+  await mongoose
+    .connect(mongoURI)
+    .then(() => {
+      console.log("Mongo connected");
+    })
+    .catch((err) => {
+      console.log("Connection error:", err);
+    });
+}
 
 // Schema
 const mailSchema = new Schema({
@@ -27,4 +29,7 @@ const mailSchema = new Schema({
 
 const mailModel = mongoose.model("Mail", mailSchema);
 
-module.exports = mailModel;
+module.exports = {
+  mailModel,
+  connectDb,
+};

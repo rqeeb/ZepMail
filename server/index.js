@@ -6,8 +6,19 @@ PORT = process.env.PORT || 2022;
 
 const { mailGun } = require("./routes/mailGun.js");
 const { mailPost } = require("./routes/mailPost.js");
+const { connectDb } = require("./db.js");
+connectDb();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://zepmail.xyz",
+      "https://www.zepmail.xyz",
+      "http://localhost:5173",
+    ],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
@@ -23,3 +34,7 @@ app.get("/health", (req, res) => {
 app.listen(PORT, () => {
   console.log("it's running!");
 });
+
+// "/clear" deletes mail.
+// "/post"  Posts the mail
+// "/mail"  gets new mails(mailgun)

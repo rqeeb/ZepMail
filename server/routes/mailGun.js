@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const multer = require("multer");
 
-const mailGun = mailGun();
+const mailGun = Router();
 const upload = multer();
 
 mailGun.post("/inbound", upload.any(), (req, res) => {
