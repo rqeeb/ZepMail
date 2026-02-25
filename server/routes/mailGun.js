@@ -13,7 +13,6 @@ mailGun.post("/inbound", upload.any(), (req, res) => {
   const bodyPlain = body["body-plain"];
 
   console.log({ recipient, sender, subject });
-  console.log("plain:", (bodyPlain || "").slice(0, 120));
 
   return res.status(200).send("ok");
 });
