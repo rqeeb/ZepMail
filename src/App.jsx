@@ -37,7 +37,6 @@ function App() {
     return () => clearTimeout(t);
   }, []);
 
-  
   function getInboxFromEmail(addr) {
     return (addr || "").split("@")[0].toLowerCase();
   }
@@ -66,7 +65,7 @@ function App() {
       try {
         const inbox = getInboxFromEmail(email);
 
-       //later will switch to 'zepmail/api'
+        //later will switch to 'zepmail/api'
         const res = await fetch(
           `https://zepmail.onrender.com/api/inbox/${inbox}/messages`,
         );
@@ -99,7 +98,6 @@ function App() {
 
     setTimeout(async () => {
       try {
-    
         await refreshInbox();
       } finally {
         setRefreshingPanel(false);

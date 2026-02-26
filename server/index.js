@@ -8,6 +8,31 @@ const inboxRoutes = require("./routes/inbox");
 const mailgunRoutes = require("./routes/mailGun");
 
 const app = express();
+const cors = require("cors");
+
+const ALLOWED = [
+  "https://zepmail.xyz",
+  "https://www.zepmail.xyz",
+  "https://www.zepmail.vercel.app",
+  "http://localhost:5173",
+  "http://localhost:3000",
+];
+
+app.use(
+  cors({
+    origin: function (origin, cb) {
+      if (!origin) return cb(null, true);
+      if (ALLOWED.includes(origin)) return cb(null, true);
+      return cb(new Error("CORS blocked: " + origin));
+    },
+    methods: ["GET", "POST", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
+
+app.options("*", cors());
+
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
