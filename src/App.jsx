@@ -10,31 +10,7 @@ function App() {
   const [theme, setTheme] = useState(() => "light");
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState(() => genLocalMail());
-  const [messages, setMessages] = useState([
-    {
-      id: "demo-1",
-      from: "Raqeeb",
-      subject: "The OTP for x service is..",
-      body: "The OTP for x service is 7869 - Thanks",
-      time: "Just now",
-    },
-
-    {
-      id: "demo-1",
-      from: "Raqeeb",
-      subject: "The OTP for x service is..",
-      body: "The OTP for x service is 7869 - ThanksThe OTP for x service is 7869 - ThanksThe OTP for x service is 7869 - ThanksThe OTP for x service is 7869 - Thanks",
-      time: "Just now",
-    },
-
-    {
-      id: "demo-1",
-      from: "Raqeeb",
-      subject: "The OTP for x service is..",
-      body: "The OTP for x service is 7869 - Thanks",
-      time: "Just now",
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [active, setActive] = useState(null);
   const hasMsgs = useMemo(() => messages.length > 0, [messages]);
   const [spinning, setSpinning] = useState(false);
@@ -61,6 +37,11 @@ function App() {
     return () => clearTimeout(t);
   }, []);
 
+  
+  function getInboxFromEmail(addr) {
+    return (addr || "").split("@")[0].toLowerCase();
+  }
+
   async function copyEmail() {
     await navigator.clipboard.writeText(email);
   }
@@ -76,29 +57,67 @@ function App() {
     }, 600);
   }
 
-  function refreshInbox() {
+  async function refreshInbox() {
     if (refreshingInbox) return;
 
     setRefreshingInbox(true);
 
-    setTimeout(() => {
-      // TODO: Fetch()
-      const data = fetch("localhost:2022");
-      console.log(data);
-      setRefreshingInbox(false);
+    setTimeout(async () => {
+      try {
+        const inbox = getInboxFromEmail(email);
+
+       //later will switch to 'zepmail/api'
+        const res = await fetch(
+          `https://zepmail.onrender.com/api/inbox/${inbox}/messages`,
+        );
+
+        const json = await res.json().catch(() => ({}));
+
+        if (!res.ok || json.ok === false) {
+          throw new Error(json.error || `Fetch failed (${res.status})`);
+        }
+
+        const nextMsgs = json.messages || [];
+        setMessages(nextMsgs);
+
+        if (active) {
+          const stillThere = nextMsgs.find((m) => m._id === active._id);
+          if (!stillThere) setActive(null);
+        }
+      } catch (err) {
+        console.error("refreshInbox error:", err);
+      } finally {
+        setRefreshingInbox(false);
+      }
     }, 700);
   }
 
-  function refreshPanel() {
+  async function refreshPanel() {
     if (refreshingPanel) return;
 
     setRefreshingPanel(true);
 
-    setTimeout(() => {
-      // TODO: Fetch()
-      setRefreshingPanel(false);
+    setTimeout(async () => {
+      try {
+    
+        await refreshInbox();
+      } finally {
+        setRefreshingPanel(false);
+      }
     }, 700);
   }
+
+  //refresh every 7sec
+  useEffect(() => {
+    refreshInbox();
+
+    const id = setInterval(() => {
+      refreshInbox();
+    }, 7000);
+
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email]);
 
   //   if (isLoading) {
   //   return <Loader logoSrc={logoSrc} />;
@@ -225,4 +244,4 @@ export default App;
 
 // TODO: Seprate Components/Functions [Done]
 // TODO: Complete CSS [Done]
-// TODO: Backend
+// TODO: Backend ))
