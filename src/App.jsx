@@ -68,7 +68,7 @@ function App() {
 
        //later will switch to 'zepmail/api'
         const res = await fetch(
-          `https://zepmail.onrender.com/api/inbox/${inbox}/messages`,
+          `https://zepmail.render.com/api/inbox/${inbox}/messages`,
         );
 
         const json = await res.json().catch(() => ({}));
