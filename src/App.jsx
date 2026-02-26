@@ -7,9 +7,7 @@ import { genLocalMail } from "./utils/genLocalMail";
 
 function App() {
   // States
-  const [theme, setTheme] = useState(
-    () => "light",
-  );
+  const [theme, setTheme] = useState(() => "light");
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState(() => genLocalMail());
   const [messages, setMessages] = useState([
