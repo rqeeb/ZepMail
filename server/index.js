@@ -32,8 +32,6 @@ app.use(
 
 app.options("*", cors());
 
-
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("dev"));
@@ -53,7 +51,7 @@ async function boot() {
 
   await Message.collection.createIndex(
     { createdAt: 1 },
-    { expireAfterSeconds: ttlSeconds }
+    { expireAfterSeconds: ttlSeconds },
   );
 
   const PORT = process.env.PORT || 2022;

@@ -124,13 +124,20 @@ export default function InboxPanel({
             <div className="list">
               {messages.map((m) => (
                 <button
-                  key={m.id}
-                  className={`row ${active?.id === m.id ? "activeRow" : ""}`}
+                  key={m._id}
+                  className={`row ${active?._id === m._id ? "activeRow" : ""}`}
                   onClick={() => setActive(m)}
                 >
                   <div className="rowFrom">{m.from}</div>
                   <div className="rowSub">{m.subject}</div>
-                  <div className="rowMeta">{m.time}</div>
+                  <div className="rowMeta">
+                    {m.createdAt
+                      ? new Date(m.createdAt).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })
+                      : ""}
+                  </div>
                 </button>
               ))}
             </div>
@@ -145,12 +152,24 @@ export default function InboxPanel({
                       <div className="msgSubject">{active.subject}</div>
                       <div className="msgFrom">{active.from}</div>
                     </div>
-                    <button className="miniIconBtn" onClick={() => setActive(null)}>
+                    <button
+                      className="miniIconBtn"
+                      onClick={() => setActive(null)}
+                    >
                       ✕
                     </button>
                   </div>
 
-                  <div className="msgBody">{active.body}</div>
+                  {active.html ? (
+                    <div
+                      className="msgBody"
+                      dangerouslySetInnerHTML={{ __html: active.html }}
+                    />
+                  ) : (
+                    <div className="msgBody" style={{ whiteSpace: "pre-wrap" }}>
+                      {active.text || ""}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
