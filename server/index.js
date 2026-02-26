@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const { connectDB } = require("./db");
-const Message = require("./models/Message");
+const Message = require("./models/message");
 
 const inboxRoutes = require("./routes/inbox");
 const mailgunRoutes = require("./routes/mailgun");
