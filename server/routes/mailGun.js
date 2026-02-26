@@ -1,20 +1,21 @@
-const { Router } = require("express");
-const multer = require("multer");
+const express = require("express");
+const Message = require("../models/Message");
 
-const mailGun = Router();
-const upload = multer();
+const router = express.Router();
 
-mailGun.post("/inbound", upload.any(), (req, res) => {
-  const body = req.body ?? {};
+router.post("/mailgun/inbound", async (req, res) => {
+  try {
+    if (req.query.secret !== process.env.INBOUND_SECRET) {
+      return res.status(401).send("Unauthorized");
+    }
 
-  const recipient = body.recipient;
-  const sender = body.sender;
-  const subject = body.subject;
-  const bodyPlain = body["body-plain"];
+    const to = (req.body.recipient || "").toLowerCase().trim();
+    const from = (req.body.sender || "").trim();
+    const subject = (req.body.subject || "").trim();
+    const text = (req.body["body-plain"] || "").trim();
+    const html = (req.body["body-html"] || "").trim();
 
-  console.log({ recipient, sender, subject });
-
-  return res.status(200).send("ok");
+    
 });
 
-module.exports = { mailGun: mailGun };
+module.exports = router;
